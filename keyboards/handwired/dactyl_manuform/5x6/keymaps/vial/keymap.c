@@ -1,49 +1,272 @@
-// Copyright 2023 QMK Community
-// SPDX-License-Identifier: GPL-2.0-or-later
-
 #include QMK_KEYBOARD_H
 
-enum layers {
-    _QWERTY,
-    _LOWER,
-    _RAISE,
+#define INLINE_HEADER
+#ifdef INLINE_HEADER
+// Layer keys
+#define ESC_LW1 LT(_LOWER1, KC_ESC)
+#define BSP_RS1 LT(_RAISE1, KC_BSPC)
+#define DEL_RS1 LT(_RAISE1, KC_DEL)
+#define LOWER2 TO(_LOWER2)
+#define DF_QWR1 DF(_QWERTY)
+
+// Apps
+#define ALFRED G(KC_SPC)
+#define ITERM G(KC_ESC)
+#define QUITAPP G(KC_Q)
+#define HIDEAPP MEH(KC_G)
+#define MEETING HYPR(KC_F16)
+#define APPWINS G(KC_GRV)
+
+// Left hand
+#define APP01 S(KC_F11)
+#define APP02 S(KC_F12)
+#define APP03 S(KC_F13)
+#define APP04 S(KC_F14)
+#define APP05 S(KC_F15)
+
+#define APP06 S(KC_F16)
+#define APP07 S(KC_F17)
+#define APP08 S(KC_F18)
+#define APP09 S(KC_F19)
+#define APP10 S(KC_F20)
+
+// Left hand
+#define APP11 A(KC_F11)
+#define APP12 A(KC_F12)
+#define APP13 A(KC_F13)
+#define APP14 A(KC_F14)
+#define APP15 A(KC_F15)
+
+#define APP16 A(KC_F16)
+#define APP17 A(KC_F17)
+#define APP18 A(KC_F18)
+#define APP19 A(KC_F19)
+#define APP20 A(KC_F20)
+
+// Right hand
+#define APP21 C(KC_F11)
+#define APP22 C(KC_F12)
+#define APP23 C(KC_F13)
+#define APP24 C(KC_F14)
+#define APP25 C(KC_F15)
+
+#define APP26 C(KC_F16)
+#define APP27 C(KC_F17)
+#define APP28 C(KC_F18)
+#define APP29 C(KC_F19)
+#define APP30 C(KC_F20)
+
+#define APP31 C(KC_F21)
+#define APP32 C(KC_F22)
+#define APP33 C(KC_F23)
+#define APP34 C(KC_F24)
+#define APP35 A(KC_F21)
+
+// Miscellaneous
+#define CUT G(KC_X)
+#define COPY G(KC_C)
+#define PASTE G(KC_V)
+#define CLIPBRD LSG(KC_C)
+#define UNDO G(KC_Z)
+#define REDO LSG(KC_Z)
+
+// macOS navigation
+#define SPACE_L MEH_T(KC_F17)
+#define SPACE_R HYPR_T(KC_F16)
+
+// Combinations
+#define CTL_Z CTL_T(KC_Z)
+#define CTL_SL RCTL_T(KC_SLSH)
+#define ALT_TLD ALT_T(KC_GRV)
+#define ALT_BSL ALT_T(KC_BSLS)
+#define G_LBRC G(KC_LBRC)
+#define G_RBRC G(KC_RBRC)
+#define BACK G_LBRC
+#define FORWARD G_RBRC
+#define SG_LBRC RSG(KC_LBRC)
+#define SG_RBRC RSG(KC_RBRC)
+#define TABPREV SG_LBRC
+#define TABNEXT SG_RBRC
+#define TAB_ALT ALT_T(KC_TAB)
+#define TAB_CMD CMD_T(KC_TAB)
+#define TAB_SFT SFT_T(KC_TAB)
+#define TAB_CTL CTL_T(KC_TAB)
+#define ESC_CMD CMD_T(KC_ESC)
+#define ESC_SFT SFT_T(KC_ESC)
+#define ESC_MEH MEH_T(KC_ESC)
+#define ENT_HPR HYPR_T(KC_ENT)
+#define SPC_SFT LSFT_T(KC_SPC)
+#define ENT_SFT RSFT_T(KC_ENT)
+#define ENT_CTL CTL_T(KC_ENT)
+#define ENT_CMD CMD_T(KC_ENT)
+#define ENT_ALT ALT_T(KC_ENT)
+#define BSP_SFT RSFT_T(KC_BSPC)
+#define ACCENT A(KC_E)
+#define CENTER MEH(KC_I)
+
+// One Shot Modifiers
+#define OS_LCTL OSM(MOD_LCTL)
+#define OS_RCTL OSM(MOD_RCTL)
+#define OS_LSFT OSM(MOD_LSFT)
+#define OS_RSFT OSM(MOD_RSFT)
+#define OS_LALT OSM(MOD_LALT)
+// #define OS_RALT OSM(MOD_LALT)
+#define OS_LCMD OSM(MOD_LGUI)
+#define OS_RCMD OSM(MOD_RGUI)
+
+// Left-hand home row mods
+#define HOME_A LCTL_T(KC_A)
+#define HOME_S LALT_T(KC_S)
+#define HOME_D LGUI_T(KC_D)
+#define HOME_F LSFT_T(KC_F)
+
+// Right-hand home row mods
+#define HOME_J RSFT_T(KC_J)
+#define HOME_K RGUI_T(KC_K)
+#define HOME_L LALT_T(KC_L)
+#define HOME_SCLN RCTL_T(KC_SCLN)
+
+// Mouse
+#ifdef MOUSEKEY_ENABLE
+#    define MOUSE MO(_MOUSE)
+#    define MS_CAPS LT(_MOUSE, KC_CAPS)
+#else
+#    define MOUSE KC_TRNS
+#    define MS_CAPS KC_CAPS
+#endif
+
+#endif // end INLINE_HEADER
+
+enum custom_keycodes {
+    QWERTY = SAFE_RANGE,
+    APPPREV, APPNEXT,
+    SS_ASD,
 };
 
-#define RAISE MO(_RAISE)
-#define LOWER MO(_LOWER)
+enum layer_names {
+    _QWERTY,
+    _LOWER1, _LOWER2,
+    _RAISE1,
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
     [_QWERTY] = LAYOUT_5x6(
-        KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_BSPC,
-        KC_TAB , KC_Q  , KC_W  , KC_E  , KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,KC_MINS,
-        KC_LSFT, KC_A  , KC_S  , KC_D  , KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,KC_SCLN,KC_QUOT,
-        KC_LCTL, KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,KC_BSLS,
-                         KC_LBRC,KC_RBRC,                                                       KC_PLUS, KC_EQL,
-                                         RAISE,KC_SPC,                        KC_ENT, LOWER,
-                                         KC_TAB,KC_HOME,                         KC_END,  KC_DEL,
-                                         KC_BSPC, KC_GRV,                        KC_LGUI, KC_LALT
+        KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,              KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_BSPC,
+
+        ENT_HPR, KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,        KC_Y   , KC_U   , KC_I   , KC_O   , KC_P    , KC_COLN,
+        ESC_MEH, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,        KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN , KC_QUOT,
+        ALT_TLD, CTL_Z  , KC_X   , KC_C   , KC_V   , KC_B   ,        KC_N   , KC_M   , KC_COMM, KC_DOT , CTL_SL  , ALT_BSL,
+                          PB_10  , KC_SPC ,                                            KC_EQL , KC_MINS,
+                                            ESC_LW1, SPC_SFT,        KC_ENT , BSP_RS1,
+                                            BSP_SFT, TAB_CMD,        OS_RSFT, OS_RCMD,
+                                            OS_LALT, ENT_CTL,        OS_RCTL, OS_LALT
     ),
 
-    [_LOWER] = LAYOUT_5x6(
-        KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC,                        KC_CIRC,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN,KC_DEL,
-        _______,_______,_______,_______,_______,KC_LBRC,                        KC_RBRC, KC_P7 , KC_P8 , KC_P9 ,_______,KC_PLUS,
-        _______,KC_HOME,KC_PGUP,KC_PGDN,KC_END ,KC_LPRN,                        KC_RPRN, KC_P4 , KC_P5 , KC_P6 ,KC_MINS,KC_PIPE,
-        _______,_______,_______,_______,_______,_______,                        _______, KC_P1 , KC_P2 , KC_P3 ,KC_EQL ,KC_UNDS,
-                                                _______,KC_PSCR,            _______, KC_P0,
-                                                _______,_______,            _______,_______,
-                                                _______,_______,            _______,_______,
-                                                _______,_______,            _______,_______
+   [_LOWER1] = LAYOUT_5x6(
+        SS_ASD, _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______, _______,
 
+        MEETING, _______, TABPREV, BACK   , FORWARD, TABNEXT,        KC_SLSH, KC_7   , KC_8   , KC_9   , KC_0   , _______,
+        ITERM  , ALFRED ,  ACCENT, APPPREV, APPNEXT, HIDEAPP,        KC_ASTR, KC_4   , KC_5   , KC_6   , KC_COLN, _______,
+        APPWINS, KC_LCTL, KC_LALT, KC_LCMD, KC_LSFT, CLIPBRD,        KC_EQL , KC_1   , KC_2   , KC_3   , KC_DOT , _______,
+                          _______, _______,                                            KC_PLUS, KC_MINS,
+                                            _______, LOWER2 ,        _______, _______,
+                                            _______, _______,        _______, _______,
+                                            _______, _______,        _______, _______
     ),
 
-    [_RAISE] = LAYOUT_5x6(
-          KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                        KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 ,KC_F11 ,
-          _______,_______,_______,_______,_______,KC_LBRC,                        KC_RBRC,_______,KC_NUM,KC_INS ,KC_SCRL,KC_MUTE,
-          _______,KC_LEFT,KC_UP  ,KC_DOWN,KC_RGHT,KC_LPRN,                        KC_RPRN,KC_MPRV,KC_MPLY,KC_MNXT,_______,KC_VOLU,
-          _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,KC_VOLD,
-                                                  _______,_______,            KC_EQL ,_______,
-                                                  _______,_______,            _______,_______,
-                                                  _______,_______,            _______,_______,
-                                                  _______,_______,            _______,_______
-    )
+    [_LOWER2] = LAYOUT_5x6(
+        _______, _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______, _______,
+
+        _______, APP01  , APP02  , APP03  , APP04  , APP05  ,        DM_PLY1, KC_F7  , KC_F8  , KC_F9  , KC_F12 , _______,
+        _______, APP06  , APP07  , APP08  , APP09  , APP10  ,        DM_RSTP, KC_F4  , KC_F5  , KC_F6  , KC_F11 , _______,
+        _______, OS_LCTL, OS_LALT, OS_LCMD, OS_LSFT, CENTER ,        DM_REC1, KC_F1  , KC_F2  , KC_F3  , KC_F10 , _______,
+                          _______, _______,                                            _______, _______,
+                                            _______, _______,        _______, _______,
+                                            _______, _______,        _______, _______,
+                                            _______, _______,        _______, _______
+    ),
+
+     [_RAISE1] = LAYOUT_5x6(
+        _______, _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______, _______,
+
+        KC_QUES, KC_PERC, KC_AT  , KC_LCBR, KC_RCBR, KC_CIRC,        SG_LBRC, KC_MPLY, KC_MNXT, SG_RBRC, _______, _______,
+        KC_EXLM, KC_UNDS, KC_AMPR, KC_LPRN, KC_RPRN, KC_DLR ,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, _______,
+        KC_TILD, KC_HASH, KC_PIPE, KC_LBRC, KC_RBRC, KC_ASTR,        _______, KC_BSPC, KC_ENT , KC_DEL , _______, _______,
+                          _______, _______,                                            _______, _______,
+                                            _______, _______,        _______, _______,
+                                            _______, _______,        _______, _______,
+                                            _______, _______,        _______, _______
+    ),
+
 };
+
+// ----------------------------------------------------------------------------
+// ------------------------------- PROCESS ------------------------------------
+uint8_t mod_state;
+uint8_t oneshot_mod_state;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef CONSOLE_ENABLE
+    uprintf(
+        "KL: kc: 0x%04X, col: %u, row: %u, pressed: %b, time: %u, interrupt: %b, count: %u\n",
+        keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count
+    );
+#endif
+
+    mod_state = get_mods();
+    oneshot_mod_state = get_oneshot_mods();
+
+    switch (keycode) {
+        case SS_ASD:
+            if (record->event.pressed) {
+                SEND_STRING("$init(asdasd)");
+            }
+            return false;
+
+        case ESC_LW1:
+            if (!record->event.pressed) {
+                unregister_code(KC_LCMD);
+                layer_off(_LOWER1);
+                layer_off(_LOWER2);
+            }
+            break;
+
+        case BSP_RS1:
+            if (!record->event.pressed) {
+                layer_off(_RAISE1);
+}
+            break;
+
+        case QWERTY:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_QWERTY);
+            }
+            break;
+
+        case APPPREV:
+            if (record->event.pressed) {
+                register_code(KC_LCMD);
+                register_code(KC_LSFT);
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+                unregister_code(KC_LSFT);
+            }
+            return false;
+
+        case APPNEXT:
+            if (record->event.pressed) {
+                unregister_code(KC_LSFT);
+                register_code(KC_LCMD);
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            return false;
+
+    }
+
+    return true;
+};
+
