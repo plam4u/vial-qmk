@@ -5,11 +5,11 @@
     "development_board": "promicro",
     "diode_direction": "COL2ROW",
     "features": {
-        "bootmagic": false,
-        "extrakey": false,
+        "console": false,
+        "command": false,
+        "extrakey": true,
         "encoder": true,
-        "mousekey": false,
-        "nkro": false,
+        "mousekey": true,
         "rgb_matrix": true
     },
     "encoder": {
