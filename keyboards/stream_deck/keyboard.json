@@ -9,7 +9,7 @@
         "command": false,
         "extrakey": true,
         "encoder": true,
-        "mousekey": true,
+        "mousekey": false,
         "rgb_matrix": true
     },
     "encoder": {
@@ -26,12 +26,11 @@
             "on": true
         },
         "animations": {
-            "breathing": true,
             "dual_beacon": true,
             "multisplash": true
         },
         "layout": [
-            {"matrix": [0, 0], "x": 16,  "y": 0, "flags": 4},
+            {"matrix": [0, 0], "x": 16,  "y": 0, "flags": 8},
             {"matrix": [0, 2], "x": 64,  "y": 0, "flags": 4},
             {"matrix": [0, 3], "x": 96,  "y": 0, "flags": 4},
             {"matrix": [0, 4], "x": 128, "y": 0, "flags": 4},
